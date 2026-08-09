@@ -1,0 +1,13 @@
+caption{
+    color: blue;
+}
+body{
+    background-color: white;
+}
+tr.time{
+    color: rgb(239, 49, 49);
+    background-color: black;
+}
+div.hem{
+    background-color: coral;
+}

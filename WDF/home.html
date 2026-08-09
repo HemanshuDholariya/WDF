@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Hub</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family:Arial, sans-serif;
+            background-color:#eaf4ff;
+        }
+
+        header{
+            background-color:#001380;
+            color:white;
+            text-align:center;
+            padding:25px;
+        }
+
+        nav{
+            background-color:#014180;
+            text-align:center;
+            padding:12px;
+        }
+
+        nav a{
+            color:white;
+            text-decoration:none;
+            margin:15px;
+            font-weight:bold;
+        }
+
+        nav a:hover{
+            color:yellow;
+            background-color: black;
+        }
+
+        .container{
+            width:80%;
+            margin:30px auto;
+        }
+
+        .box{
+            background:white;
+            border:2px solid #0066cc;
+            border-radius:10px;
+            padding:20px;
+            margin-bottom:20px;
+        }
+
+        .box h2{
+            color:#004080;
+        }
+
+        .btn{
+            display:inline-block;
+            background:#0066cc;
+            color:white;
+            padding:10px 20px;
+            text-decoration:none;
+            border-radius:5px;
+        }
+
+        .btn:hover{
+            background:#004080;
+        }
+
+        footer{
+            background:#004080;
+            color:white;
+            text-align:center;
+            padding:15px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Student Hub</h1>
+    <p>Learn  Register  Participate</p>
+</header>
+
+<nav>
+    <a href="home.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="event.html">Events</a>
+    <a href="admin.html">Admin</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+</nav>
+
+<div class="container">
+
+    <div class="box">
+        <h2>Welcome to Student Hub</h2>
+        <p>
+            Student Hub is a platform where students can register for college events,
+            check announcements, and stay updated with campus activities.
+        </p>
+
+        <a href="register.html" class="btn">Register Now</a>
+    </div>
+
+    <div class="box">
+        <h2>Our Services</h2>
+
+        <ul>
+            <li>Student Registration</li>
+            <li>Upcoming Events</li>
+            <li>Workshop Information</li>
+            <li>Notice Board</li>
+            <li>Frequently Asked Questions</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <h2>Latest Announcement</h2>
+
+        <marquee behavior="scroll" direction="right">
+            🎉 Annual Tech Fest Registration is Open! Register Before 15 August.
+        </marquee>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Student Hub | Developed by Students
+</footer>
+
+</body>
+</html>
