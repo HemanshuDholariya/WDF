@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Hub</title>
+    <script src="script.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F7F5EF;
+            color: #292D32;
+        }
+
+        header {
+            background-color: #FFFFFF;
+            color: #263D2C;
+            text-align: center;
+            padding: 25px;
+            border-bottom: 3px solid #527853;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        
+        nav {
+            background-color: #263D2C;
+            text-align: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+            padding: 8px 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #263D2C;
+            background-color: #DDE8D5;
+        }
+
+        
+        .container {
+            width: 80%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        
+        .box {
+            background-color: #FFFFFF;
+            border: 1px solid #D9E1D5;
+            border-left: 5px solid #527853;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(38, 61, 44, 0.08);
+        }
+
+        .box h2 {
+            color: #355E3B;
+            margin-top: 0;
+        }
+
+        .box p,
+        .box li {
+            line-height: 1.7;
+            color: #454B45;
+        }
+
+        .box ul {
+            padding-left: 25px;
+        }
+
+        .box li {
+            margin-bottom: 8px;
+        }
+
+        
+        .btn {
+            display: inline-block;
+            background-color: #527853;
+            color: #FFFFFF;
+            padding: 12px 22px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #263D2C;
+            transform: translateY(-2px);
+        }
+
+        
+        .box marquee {
+            color: #8A5A16;
+            background-color: #FFF4D6;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        
+        footer {
+            background-color: #263D2C;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 18px;
+            margin-top: 30px;
+        }
+
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            nav {
+                line-height: 2.5;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 4px;
+            }
+
+            header h1 {
+                font-size: 26px;
+            }
+
+            .box {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Student Hub</h1>
+
+    </header>
+
+    <nav>
+        <a href="home.html">Home</a> |
+        <a href="register.html">Register</a> |
+        <a href="event.html">Events</a> |
+        <a href="admin.html">Admin</a> |
+        <a href="about.html">About</a> |
+        <a href="faq.html">FAQ</a>
+    </nav>
+
+    <div class="container">
+
+        <div class="box">
+            <h2>Welcome to Student Hub</h2>
+            <p>
+                Student Hub is a platform where students can register for college events,
+                check announcements, and stay updated with campus activities.
+            </p>
+
+            <a href="register.html" class="btn">Register Now</a>
+        </div>
+
+        <div class="box">
+            <h2>Our Services</h2>
+
+            <ul>
+                <li>Student Registration</li>
+                <li>Upcoming Events</li>
+                <li>Workshop Information</li>
+                <li>Notice Board</li>
+                <li>Frequently Asked Questions</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2>Latest Announcement</h2>
+
+            <marquee behavior="scroll" direction="right">
+                🎉 Annual Tech Fest Registration is Open! Register Before 15 August.
+            </marquee>
+
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 Student Hub | Developed by Students
+    </footer>
+
+</body>
+
+</html>

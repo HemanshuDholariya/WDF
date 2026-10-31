@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentHub - FAQ</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: white;
+            color: rgb(4, 123, 58);
+        }
+
+        header, footer {
+            text-align: center;
+            padding: 15px;
+            background: #e8f0fe;
+        }
+
+        nav a {
+            margin: 10px;
+        }
+
+        .faq-question {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: left;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f2f2f2;
+        }
+
+        .faq-answer {
+            padding: 10px;
+        }
+
+        .dark {
+            background: #222;
+            color: white;
+        }
+
+        .dark header, .dark footer {
+            background: #333;
+        }
+
+        .dark .faq-question {
+            background: #444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>StudentHub - FAQ</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html">Register</a>
+    </nav>
+
+    <button id="themeBtn">Dark Mode</button>
+</header>
+
+<main>
+    <h2>Frequently Asked Questions</h2>
+
+    <button class="faq-question">What is StudentHub?</button>
+    <p class="faq-answer" hidden>
+        StudentHub is a platform for students.
+    </p>
+
+    <button class="faq-question">How can I register?</button>
+    <p class="faq-answer" hidden>
+        Go to the Register page and fill out the form.
+    </p>
+
+    <button class="faq-question">How can I contact StudentHub?</button>
+    <p class="faq-answer" hidden>
+        Visit the Contact page to send us a message.
+    </p>
+</main>
+
+<footer>
+    <p>&copy; 2026 StudentHub</p>
+</footer>
+
+<script>
+    
+    document.querySelectorAll(".faq-question").forEach(button => {
+        button.addEventListener("click", () => {
+            const answer = button.nextElementSibling;
+            answer.hidden = !answer.hidden;
+        });
+    });
+
+    
+    const themeBtn = document.getElementById("themeBtn");
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+        themeBtn.textContent = "Light Mode";
+    }
+
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        const dark = document.body.classList.contains("dark");
+        themeBtn.textContent = dark ? "Light Mode" : "Dark Mode";
+
+        localStorage.setItem("theme", dark ? "dark" : "light");
+    });
+</script>
+
+</body>
+</html>
+
