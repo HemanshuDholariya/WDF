@@ -1,0 +1,172 @@
+/* 1. Design tokens ---------------------------------------- */
+:root {
+    --color-primary: #1e3a8a;
+    --color-primary-dark: #172554;
+    --color-accent: #0f766e;
+    --color-accent-dark: #115e59;
+    --color-bg: #f4f6fb;
+    --color-surface: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #4b5563;
+    --color-border: #d9deea;
+
+    --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2.5rem;
+    --radius: 10px;
+}
+
+/* 2. Reset / base ----------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-bg);
+}
+
+h1, h2 { line-height: 1.25; margin: 0 0 var(--space-1); }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+p  { margin: 0 0 var(--space-2); max-width: 65ch; }
+
+a { color: var(--color-primary); }
+a:focus-visible, .btn:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 2px;
+}
+
+/* 3. Header + navigation (Flexbox) ------------------------ */
+.site-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--color-primary);
+    color: #fff;
+}
+.site-header h1 { margin: 0; }
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+}
+.nav-links a {
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible { background: var(--color-primary-dark); }
+
+/* 4. Page layout (Grid) ----------------------------------- */
+.layout {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-2);
+    align-content: start;
+}
+
+.card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-3);
+}
+
+/* 5. Components ------------------------------------------- */
+.link-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+.btn {
+    display: block;
+    padding: 0.7rem 1rem;
+    border-radius: var(--radius);
+    background: var(--color-accent);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+}
+.btn:hover { background: var(--color-accent-dark); }
+
+.option-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+.option-list li {
+    padding: var(--space-2);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 5px solid var(--color-accent);
+    border-radius: var(--radius);
+    font-weight: 600;
+}
+
+/* 6. Footer (Flexbox) ------------------------------------- */
+.site-footer {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-2);
+    background: var(--color-primary-dark);
+    color: #fff;
+    font-size: 0.9rem;
+}
+.site-footer p { margin: 0; }
+
+/* 7. Tablet >= 768px -------------------------------------- */
+@media (min-width: 768px) {
+    h1 { font-size: 1.9rem; }
+    h2 { font-size: 1.4rem; }
+
+    .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-2) var(--space-4);
+    }
+
+    .layout { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
+
+    .layout--sidebar { grid-template-columns: 2fr 1fr; }
+    .layout--split   { grid-template-columns: 1fr 1fr; }
+
+    .option-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 8. Desktop >= 1024px ------------------------------------ */
+@media (min-width: 1024px) {
+    .layout--sidebar { grid-template-columns: 3fr 1fr; }
+    .option-list { grid-template-columns: repeat(3, 1fr); }
+    .card { padding: var(--space-4); }
+}
+
+/* 9. Accessibility ---------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
