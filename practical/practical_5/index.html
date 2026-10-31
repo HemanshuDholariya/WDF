@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #F7F5EF;
+        color: #292D32;
+    }
+
+    .container {
+        width: 80%;
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 25px;
+        background: white;
+        border: 1px solid #D9E1D5;
+        border-left: 5px solid #527853;
+        border-radius: 10px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #355E3B;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        padding: 8px;
+        vertical-align: top;
+    }
+
+    input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]),
+    select, textarea {
+        width: 100%;
+        padding: 9px;
+        box-sizing: border-box;
+        border: 1px solid #D9E1D5;
+        border-radius: 5px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        display: block;
+    }
+
+    .button {
+        text-align: center;
+        padding: 15px;
+    }
+
+    input[type="submit"] {
+        padding: 10px 25px;
+        background: #527853;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #strength, #message {
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    @media(max-width: 600px) {
+        .container {
+            width: auto;
+            margin: 15px;
+            padding: 12px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Student Registration</h1>
+
+<form id="form" novalidate>
+<table>
+
+<tr>
+<td><label for="first">First Name</label></td>
+<td>
+<input type="text" id="first" required>
+<span class="error" id="firstError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="last">Last Name</label></td>
+<td>
+<input type="text" id="last" required>
+<span class="error" id="lastError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="mobile">Mobile</label></td>
+<td>
+<input type="tel" id="mobile" placeholder="10-digit number" required>
+<span class="error" id="mobileError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="email">Email</label></td>
+<td>
+<input type="email" id="email" required>
+<span class="error" id="emailError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="dob">Date of Birth</label></td>
+<td>
+<input type="date" id="dob" required>
+<span class="error" id="dobError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="password">Password</label></td>
+<td>
+<input type="password" id="password" required>
+<div id="strength"></div>
+<span class="error" id="passwordError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="confirm">Confirm Password</label></td>
+<td>
+<input type="password" id="confirm" required>
+<span class="error" id="confirmError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="course">Course</label></td>
+<td>
+<select id="course" required>
+<option value="">Select Course</option>
+<option>BCA</option>
+<option>BSc IT</option>
+<option>B.Tech</option>
+<option>MCA</option>
+</select>
+<span class="error" id="courseError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="year">Year</label></td>
+<td>
+<select id="year" required>
+<option value="">Select Year</option>
+<option>First Year</option>
+<option>Second Year</option>
+<option>Third Year</option>
+<option>Fourth Year</option>
+</select>
+<span class="error" id="yearError"></span>
+</td>
+</tr>
+
+<tr>
+<td>Gender</td>
+<td>
+<label><input type="radio" name="gender" value="Male"> Male</label>
+<label><input type="radio" name="gender" value="Female"> Female</label>
+<label><input type="radio" name="gender" value="Other"> Other</label>
+<span class="error" id="genderError"></span>
+</td>
+</tr>
+
+<tr>
+<td><label for="terms">Terms</label></td>
+<td>
+<input type="checkbox" id="terms">
+<label for="terms">I accept the terms</label>
+<span class="error" id="termsError"></span>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" class="button">
+<input type="submit" value="Register">
+</td>
+</tr>
+
+</table>
+<p id="message" role="status" aria-live="polite"></p>
+</form>
+</div>
+
+<script>
+const form = document.getElementById("form");
+
+function validate() {
+    let valid = true;
+
+    document.querySelectorAll(".error").forEach(e => e.textContent = "");
+    document.getElementById("message").textContent = "";
+
+    function error(id, text) {
+        document.getElementById(id + "Error").textContent = text;
+        valid = false;
+    }
+
+    const first = document.getElementById("first").value.trim();
+    const last = document.getElementById("last").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const dob = document.getElementById("dob").value;
+    const password = document.getElementById("password").value;
+    const confirm = document.getElementById("confirm").value;
+
+    // Regular expression validation
+    const namePattern = /^[A-Za-z ]{2,30}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^[6-9]\d{9}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+    if (!namePattern.test(first))
+        error("first", "Enter a valid name (2-30 letters).");
+
+    if (!namePattern.test(last))
+        error("last", "Enter a valid name (2-30 letters).");
+
+    if (!mobilePattern.test(mobile))
+        error("mobile", "Enter a valid 10-digit Indian mobile number.");
+
+    if (!emailPattern.test(email))
+        error("email", "Enter a valid email address.");
+
+    if (!dob || new Date(dob) >= new Date()) 
+        error("dob", "Enter a valid date of birth in the past.");
+
+    if (!passwordPattern.test(password))
+        error("password", "Use 8 characters, uppercase, lowercase, number and symbol.");
+
+    if (password !== confirm || confirm === "")
+        error("confirm", "Passwords do not match.");
+
+    if (!document.getElementById("course").value)
+        error("course", "Please select a course.");
+
+    if (!document.getElementById("year").value)
+        error("year", "Please select your year.");
+
+    if (!document.querySelector('input[name="gender"]:checked'))
+        error("gender", "Please select your gender.");
+
+    if (!document.getElementById("terms").checked)
+        error("terms", "Please accept the terms.");
+
+    return valid;
+}
+
+// Password strength meter
+document.getElementById("password").addEventListener("input", function() {
+    let p = this.value;
+    let score = 0;
+
+    if (p.length >= 8) score++;
+    if (/[A-Z]/.test(p) && /[a-z]/.test(p)) score++;
+    if (/\d/.test(p)) score++;
+    if (/[^A-Za-z0-9]/.test(p)) score++;
+
+    const levels = ["Weak", "Fair", "Good", "Strong"];
+    document.getElementById("strength").textContent =
+        p ? "Password strength: " + levels[Math.max(0, score - 1)] : "";
+});
+
+// Real-time validation
+form.querySelectorAll("input, select").forEach(field => {
+    field.addEventListener("change", validate);
+    field.addEventListener("input", validate);
+});
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (validate()) {
+        document.getElementById("message").textContent =
+            "Registration successful!";
+
+        // Demo only: no registration data is saved.
+    } else {
+        const firstError = document.querySelector(".error:not(:empty)");
+        if (firstError) {
+            const field = firstError.closest("td").querySelector("input, select");
+            if (field) field.focus();
+        }
+    }
+});
+</script>
+
+</body>
+</html>
