@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript DOM Manipulation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 15px;
+            background: #f4f4f4;
+            color: #222;
+        }
+
+        section {
+            background: white;
+            padding: 15px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 6px 10px;
+            margin: 3px;
+            cursor: pointer;
+        }
+
+        #banner {
+            background: #d9f0dc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        #modal {
+            display: none;
+            background: #eee;
+            padding: 15px;
+            border: 1px solid #999;
+        }
+
+        .dark {
+            background: #222;
+            color: white;
+        }
+
+        .dark section {
+            background: #333;
+            border-color: #555;
+        }
+
+        .dark #modal {
+            background: #444;
+        }
+
+        .dark #banner {
+            background: #294a32;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>JavaScript DOM Manipulation</h2>
+
+<button id="themeBtn">Dark Mode</button>
+
+<p>
+    <a href="#faq">FAQ</a> |
+    <a href="#slider">Slider</a>
+</p>
+
+
+<section>
+    <h3>Notification Banner</h3>
+    <div id="banner">
+        Welcome to StudentHub!
+        <button id="closeBanner">Close</button>
+    </div>
+    <button id="showBanner">Show Notification</button>
+</section>
+
+
+<section>
+    <h3>Modal Popup</h3>
+    <button id="openModal">Open Modal</button>
+
+    <div id="modal" role="dialog"
+         aria-modal="true" aria-labelledby="modalTitle"
+         aria-hidden="true">
+        <h3 id="modalTitle">Welcome!</h3>
+        <p>This is a simple modal popup.</p>
+        <button id="closeModal">Close Modal</button>
+    </div>
+</section>
+
+
+<section id="slider">
+    <h3>Content Slider</h3>
+    <h4 id="slideTitle">JavaScript</h4>
+    <p id="slideText">
+        JavaScript adds interactivity to a webpage.
+    </p>
+
+    <button id="previous">Previous</button>
+    <button id="next">Next</button>
+</section>
+
+
+<section id="faq">
+    <h3>Frequently Asked Questions</h3>
+
+    <button class="question" aria-expanded="false">
+        What is DOM?
+    </button>
+    <p class="answer" hidden>
+        DOM stands for Document Object Model.
+    </p>
+
+    <button class="question" aria-expanded="false">
+        What is an event listener?
+    </button>
+    <p class="answer" hidden>
+        An event listener runs code when an event occurs,
+        such as a button click.
+    </p>
+</section>
+
+<script>
+    
+    const themeBtn = document.getElementById("themeBtn");
+
+    function setTheme(theme) {
+        document.body.classList.toggle("dark", theme === "dark");
+        themeBtn.textContent =
+            theme === "dark" ? "Light Mode" : "Dark Mode";
+    }
+
+    try {
+        setTheme(localStorage.getItem("theme") || "light");
+    } catch (error) {
+        setTheme("light");
+    }
+
+    themeBtn.addEventListener("click", function () {
+        const theme = document.body.classList.contains("dark")
+            ? "light" : "dark";
+
+        setTheme(theme);
+
+        try {
+            localStorage.setItem("theme", theme);
+        } catch (error) {
+            
+        }
+    });
+
+    
+    const banner = document.getElementById("banner");
+
+    document.getElementById("closeBanner").addEventListener("click", function () {
+        banner.hidden = true;
+    });
+
+    document.getElementById("showBanner").addEventListener("click", function () {
+        banner.hidden = false;
+    });
+
+    
+    const modal = document.getElementById("modal");
+
+    function closeModal() {
+        modal.style.display = "none";
+        modal.setAttribute("aria-hidden", "true");
+        document.getElementById("openModal").focus();
+    }
+
+    document.getElementById("openModal").addEventListener("click", function () {
+        modal.style.display = "block";
+        modal.setAttribute("aria-hidden", "false");
+        document.getElementById("closeModal").focus();
+    });
+
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+
+   
+    const slides = [
+        ["JavaScript", "JavaScript adds interactivity to a webpage."],
+        ["HTML", "HTML provides the structure of a webpage."],
+        ["CSS", "CSS styles the appearance of a webpage."]
+    ];
+
+    let currentSlide = 0;
+
+    function showSlide() {
+        document.getElementById("slideTitle").textContent =
+            slides[currentSlide][0];
+
+        document.getElementById("slideText").textContent =
+            slides[currentSlide][1];
+    }
+
+    document.getElementById("next").addEventListener("click", function () {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide();
+    });
+
+    document.getElementById("previous").addEventListener("click", function () {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide();
+    });
+
+   
+    document.querySelectorAll(".question").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const answer = button.nextElementSibling;
+            const expanded = button.getAttribute("aria-expanded") === "true";
+
+            button.setAttribute("aria-expanded", String(!expanded));
+            answer.hidden = expanded;
+        });
+    });
+</script>
+
+</body>
+</html>
