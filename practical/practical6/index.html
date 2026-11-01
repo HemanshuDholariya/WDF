@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Practical 6 - Fetch API</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 25px;
+            background: #f4f4f4;
+            color: #222;
+        }
+
+
+
+        h2 {
+
+            text-align: center;
+
+        }
+
+
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 10px;
+        }
+
+
+
+        input,
+        select {
+
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+
+
+
+        button {
+
+            cursor: pointer;
+            background: #1769aa;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+
+
+        .event {
+
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .event h3 {
+            margin-top: 0;
+        }
+
+
+
+        #status {
+
+            text-align: center;
+            margin: 15px 0;
+        }
+
+
+
+        #pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px;
+
+        }
+
+
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Event List</h2>
+
+
+
+    <div class="controls">
+
+        <input type="search" id="search" placeholder="Search events">
+
+
+
+        <select id="category">
+
+            <option value="">All Categories</option>
+
+            <option value="Technical">Technical</option>
+
+            <option value="Cultural">Cultural</option>
+
+            <option value="Sports">Sports</option>
+
+        </select>
+
+
+
+        <select id="sorting">
+
+            <option value="asc">Name: A to Z</option>
+
+            <option value="desc">Name: Z to A</option>
+
+        </select>
+
+    </div>
+
+
+
+    <p id="status" role="status" aria-live="polite">Loading events...</p>
+
+    <div id="eventList"></div>
+
+
+
+    <div id="pagination">
+
+        <button id="previous">Previous</button>
+
+        <span id="pageNumber">Page 1</span>
+
+        <button id="next">Next</button>
+
+    </div>
+
+
+
+    <script>
+
+        const events = [
+
+            { id: 1, name: "Coding Competition", category: "Technical", date: "2026-11-01" },
+
+            { id: 2, name: "Dance Competition", category: "Cultural", date: "2026-11-02" },
+
+            { id: 3, name: "Cricket Tournament", category: "Sports", date: "2026-11-03" },
+
+            { id: 4, name: "Web Development Workshop", category: "Technical", date: "2026-11-04" },
+
+            { id: 5, name: "Music Festival", category: "Cultural", date: "2026-11-05" },
+
+            { id: 6, name: "Football Match", category: "Sports", date: "2026-11-06" },
+
+            { id: 7, name: "Cybersecurity Seminar", category: "Technical", date: "2026-11-07" },
+
+            { id: 8, name: "Drama Competition", category: "Cultural", date: "2026-11-08" },
+
+            { id: 9, name: "Basketball Match", category: "Sports", date: "2026-11-09" },
+
+            { id: 10, name: "AI Workshop", category: "Technical", date: "2026-11-10" },
+
+            { id: 11, name: "Photography Contest", category: "Cultural", date: "2026-11-11" },
+
+            { id: 12, name: "Chess Tournament", category: "Sports", date: "2026-11-12" },
+
+            { id: 13, name: "Robotics Exhibition", category: "Technical", date: "2026-11-13" },
+
+            { id: 14, name: "Art Exhibition", category: "Cultural", date: "2026-11-14" },
+
+            { id: 15, name: "Athletics Meet", category: "Sports", date: "2026-11-15" }
+
+        ];
+
+
+
+        let allEvents = []; let currentPage = 1; const pageSize = 5;
+
+        const eventList = document.getElementById("eventList"); const status = document.getElementById("status");
+
+
+        async function loadEvents() {
+            status.textContent = "Loading events...";
+
+
+            try {
+
+                const jsonFile = new Blob([JSON.stringify(events)],
+                    { type: "application/json" }
+
+                );
+
+
+
+                const url = URL.createObjectURL(jsonFile); const response = await fetch(url); URL.revokeObjectURL(url);
+
+
+                if (!response.ok) {
+
+                    throw new Error("Unable to load data.");
+
+                }
+
+
+
+                allEvents = await response.json(); displayEvents();
+            } catch (error) {
+
+                status.textContent = "Error loading events. Please try again."; eventList.textContent = "";
+
+            }
+
+        }
+
+
+
+        function displayEvents() {
+
+            const searchText = document.getElementById("search").value.toLowerCase(); const category = document.getElementById("category").value;
+            const sorting = document.getElementById("sorting").value;
+
+
+
+            let filteredEvents = allEvents.filter(function (event) {
+
+                return event.name.toLowerCase().includes(searchText) && (!category || event.category === category);
+            });
+
+
+
+            filteredEvents.sort(function (a, b) {
+                return sorting === "asc"
+                    ? a.name.localeCompare(b.name)
+
+                    : b.name.localeCompare(a.name);
+
+            });
+
+
+
+            const totalPages = Math.ceil(filteredEvents.length / pageSize); currentPage = Math.min(currentPage, Math.max(totalPages, 1));
+
+
+            const start = (currentPage - 1) * pageSize;
+
+            const pageEvents = filteredEvents.slice(start, start + pageSize);
+
+            eventList.textContent = "";
+
+
+
+            if (pageEvents.length === 0) {
+
+                status.textContent = "No matching events found.";
+
+            } else {
+
+                status.textContent = "Total events found: " + filteredEvents.length;
+
+            }
+
+
+
+            pageEvents.forEach(function (event) {
+
+                const card = document.createElement("div"); card.className = "event";
+
+
+                const title = document.createElement("h3"); title.textContent = event.name;
+
+
+                const categoryText = document.createElement("p"); categoryText.textContent = "Category: " + event.category;
+
+
+                const dateText = document.createElement("p"); dateText.textContent = "Date: " + event.date;
+
+
+                card.append(title, categoryText, dateText); eventList.appendChild(card);
+            });
+
+            document.getElementById("pageNumber").textContent = "Page " + currentPage + " of " + Math.max(totalPages, 1);
+
+
+            document.getElementById("previous").disabled = currentPage === 1; document.getElementById("next").disabled =
+                currentPage >= totalPages || totalPages === 0;
+
+        }
+
+
+
+        document.getElementById("search").addEventListener("input", function () {
+            currentPage = 1;
+            displayEvents();
+
+        });
+
+
+
+        document.getElementById("category").addEventListener("change", function () {
+            currentPage = 1;
+            displayEvents();
+
+        });
+
+
+
+        document.getElementById("sorting").addEventListener("change", function () {
+            currentPage = 1;
+            displayEvents();
+
+        });
+
+
+
+        document.getElementById("previous").addEventListener("click", function () {
+            if (currentPage > 1) {
+
+                currentPage--; displayEvents();
+            }
+
+        });
+
+
+
+        document.getElementById("next").addEventListener("click", function () {
+            currentPage++;
+            displayEvents();
+
+        });
+
+
+
+        loadEvents();
+
+    </script>
+
+
+
+</body>
+
+</html>

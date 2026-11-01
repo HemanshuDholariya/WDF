@@ -1,0 +1,26 @@
+[
+    {
+        "id" : 1,
+        "name" : "Arav Patel",
+        "department": "CE",
+        "semester": 3
+    },
+    {
+       "id" : 2,
+        "name" : "raghav Patel",
+        "department": "CE",
+        "semester": 5 
+    },
+    {
+         "id" : 3,
+        "name" : "ramesh Patel",
+        "department": "IT",
+        "semester": 5 
+    },
+    {
+         "id" : 4,
+        "name" : "Ravi Patel",
+        "department": "IT",
+        "semester": 3
+    }
+]
